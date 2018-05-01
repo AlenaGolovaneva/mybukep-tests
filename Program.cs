@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 
 namespace MyBukepTests
 {
@@ -39,10 +40,32 @@ namespace MyBukepTests
 
         public void SendEmailTest()
         {
+            Browser = new ChromeDriver("/Users/alenagolovaneva/Documents/Repositories/MyBukepTests/bin/Debug/netcoreapp2.0/");
+            Browser.Manage().Window.Maximize();
+            //Browser.Manage().Timeouts().ImplicitWait(T)
+            Browser.Navigate().GoToUrl("https://my.bukep.ru:447/Admin/Admin/Login/8236196");
+            IWebElement mail = Browser.FindElement(By.CssSelector(cssSelectorToFind: ".fa.fa-envelope-open-o"));
+            mail.Click();
+            IWebElement write = Browser.FindElement(By.CssSelector(".btn.btn-block.btn-danger.portElements"));
+            write.Click();
+
+            WebDriverWait wait = new WebDriverWait(Browser,new TimeSpan(0,0,5));
+            IWebElement fioInput = wait.Until(b => b.FindElement(By.Id("FIO")));
+            //g.Click();
+            //IWebElement to = Browser.FindElement(By.Id("theme"));
+           
+            fioInput.SendKeys("Исаенко Виталий");
+            IWebElement idInput = wait.Until(b => b.FindElement(By.Id("IdPerson")));
+            idInput.SendKeys("10394");
+            //IWebElement chuse = Browser.FindElement(By.Id("ui-id-69"));
+            //IWebElement a = wait.Until(b => b.FindElement(By.Id("ui-id-1")));
+            //a.Click();
 
         }
 
+   
 
+      
 
         public void LoginTest()
         {
@@ -53,13 +76,14 @@ namespace MyBukepTests
             Browser.Navigate().GoToUrl("https://my.bukep.ru:447");
             IWebElement loginInput = Browser.FindElement(By.Id("login"));
             IWebElement passwordInput = Browser.FindElement(By.Id("password"));
-            IWebElement tofind = GetElement(By.LinkText("Расписание"));
+            //IWebElement tofind = GetElement(By.ClassName("dropdown-toggle"));
             IWebElement battonInput = Browser.FindElement(By.CssSelector(".btn.btn-block.btn-primary"));
             loginInput.SendKeys("vtest");
             passwordInput.SendKeys("vtest");
             battonInput.Click();
 
-            if (tofind != null)
+            String url = Browser.Url;
+            if (url == "https://my.bukep.ru:447/Home")
             {
                 Console.WriteLine("Test Passed :)");
             }

@@ -3,93 +3,76 @@ using System.Collections.Generic;
 using System.Linq;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 
-namespace MyBukepTests
-{
-    class Program
-    {
+namespace MyBukepTests {
+    class Program {
         IWebDriver Browser;
-        static void Main(string[] args)
-        {
-            Program program = new Program();
-            string testName = Console.ReadLine();
-            switch (testName)
-            {
+        static void Main (string[] args) {
+            Program program = new Program ();
+            string testName = Console.ReadLine ();
+            switch (testName) {
                 case "Login":
-                    program.LoginTest();
+                    program.LoginTest ();
                     break;
                 case "SendEmail":
-                    program.SendEmailTest();
+                    program.SendEmailTest ();
                     break;
 
             }
 
-
-
         }
 
-        public IWebElement GetElement(By locator)
-        {
-            List<IWebElement> elements = Browser.FindElements(locator).ToList();
+        public IWebElement GetElement (By locator) {
+            List<IWebElement> elements = Browser.FindElements (locator).ToList ();
             if (elements.Count > 0)
                 return elements[0];
             else
                 return null;
         }
 
-        public void SendEmailTest()
-        {
-            Browser = new ChromeDriver("/Users/alenagolovaneva/Documents/Repositories/MyBukepTests/bin/Debug/netcoreapp2.0/");
-            Browser.Manage().Window.Maximize();
+        public void SendEmailTest () {
+            Browser = new ChromeDriver ("bin/Debug/netcoreapp2.0/");
+            Browser.Manage ().Window.Maximize ();
             //Browser.Manage().Timeouts().ImplicitWait(T)
-            Browser.Navigate().GoToUrl("https://my.bukep.ru:447/Admin/Admin/Login/8236196");
-            IWebElement mail = Browser.FindElement(By.CssSelector(cssSelectorToFind: ".fa.fa-envelope-open-o"));
-            mail.Click();
-            IWebElement write = Browser.FindElement(By.CssSelector(".btn.btn-block.btn-danger.portElements"));
-            write.Click();
+            Browser.Navigate ().GoToUrl ("https://my.bukep.ru:447/Admin/Admin/Login/8236196");
+            IWebElement mail = Browser.FindElement (By.CssSelector (cssSelectorToFind: ".fa.fa-envelope-open-o"));
+            mail.Click ();
+            IWebElement write = Browser.FindElement (By.CssSelector (".btn.btn-block.btn-danger.portElements"));
+            write.Click ();
 
-            WebDriverWait wait = new WebDriverWait(Browser,new TimeSpan(0,0,5));
-            IWebElement fioInput = wait.Until(b => b.FindElement(By.Id("FIO")));
-            //g.Click();
-            //IWebElement to = Browser.FindElement(By.Id("theme"));
-           
-            fioInput.SendKeys("Исаенко Виталий");
-            IWebElement idInput = wait.Until(b => b.FindElement(By.Id("IdPerson")));
-            idInput.SendKeys("10394");
-            //IWebElement chuse = Browser.FindElement(By.Id("ui-id-69"));
-            //IWebElement a = wait.Until(b => b.FindElement(By.Id("ui-id-1")));
-            //a.Click();
+            WebDriverWait wait = new WebDriverWait (Browser, new TimeSpan (0, 0, 5));
+            IWebElement fioInput = wait.Until (b => b.FindElement (By.Id ("FIO")));
+            fioInput.SendKeys ("Исаенко Виталий");
 
+            new Actions (Browser).SendKeys (OpenQA.Selenium.Keys.ArrowDown).Perform ();
+            new Actions (Browser).SendKeys (OpenQA.Selenium.Keys.Return).Perform ();
+
+            //Тут найди поле ввода темы и поле ввода текста, введи туда сообщения, и все будет работать)
+
+            IWebElement send = Browser.FindElement (By.Id ("sent"));
+            send.Click ();
         }
 
-   
+        public void LoginTest () {
 
-      
-
-        public void LoginTest()
-        {
-
-
-            Browser = new ChromeDriver("/Users/alenagolovaneva/Documents/Repositories/MyBukepTests/bin/Debug/netcoreapp2.0/");
-            Browser.Manage().Window.Maximize();
-            Browser.Navigate().GoToUrl("https://my.bukep.ru:447");
-            IWebElement loginInput = Browser.FindElement(By.Id("login"));
-            IWebElement passwordInput = Browser.FindElement(By.Id("password"));
+            Browser = new ChromeDriver ("/Users/alenagolovaneva/Documents/Repositories/MyBukepTests/bin/Debug/netcoreapp2.0/");
+            Browser.Manage ().Window.Maximize ();
+            Browser.Navigate ().GoToUrl ("https://my.bukep.ru:447");
+            IWebElement loginInput = Browser.FindElement (By.Id ("login"));
+            IWebElement passwordInput = Browser.FindElement (By.Id ("password"));
             //IWebElement tofind = GetElement(By.ClassName("dropdown-toggle"));
-            IWebElement battonInput = Browser.FindElement(By.CssSelector(".btn.btn-block.btn-primary"));
-            loginInput.SendKeys("vtest");
-            passwordInput.SendKeys("vtest");
-            battonInput.Click();
+            IWebElement battonInput = Browser.FindElement (By.CssSelector (".btn.btn-block.btn-primary"));
+            loginInput.SendKeys ("vtest");
+            passwordInput.SendKeys ("vtest");
+            battonInput.Click ();
 
             String url = Browser.Url;
-            if (url == "https://my.bukep.ru:447/Home")
-            {
-                Console.WriteLine("Test Passed :)");
-            }
-            else
-            {
-                Console.WriteLine("Test Failed :(");
+            if (url == "https://my.bukep.ru:447/Home") {
+                Console.WriteLine ("Test Passed :)");
+            } else {
+                Console.WriteLine ("Test Failed :(");
 
             }
         }

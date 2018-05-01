@@ -49,8 +49,10 @@ namespace MyBukepTests {
             new Actions (Browser).SendKeys (OpenQA.Selenium.Keys.ArrowDown).Perform ();
             new Actions (Browser).SendKeys (OpenQA.Selenium.Keys.Return).Perform ();
 
-            //Тут найди поле ввода темы и поле ввода текста, введи туда сообщения, и все будет работать)
-
+            IWebElement topic = Browser.FindElement (By.Id("Theme"));
+            topic.SendKeys("testMyBUKEP");
+            IWebElement text = Browser.FindElement(By.Id("Text"));
+            text.SendKeys("hi!");
             IWebElement send = Browser.FindElement (By.Id ("sent"));
             send.Click ();
         }

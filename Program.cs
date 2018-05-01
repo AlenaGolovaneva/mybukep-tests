@@ -44,15 +44,17 @@ namespace MyBukepTests {
 
             WebDriverWait wait = new WebDriverWait (Browser, new TimeSpan (0, 0, 5));
             IWebElement fioInput = wait.Until (b => b.FindElement (By.Id ("FIO")));
-            fioInput.SendKeys ("Исаенко Виталий");
+            fioInput.SendKeys ("Исаенко Виталий Анатольевич");
 
-            new Actions (Browser).SendKeys (OpenQA.Selenium.Keys.ArrowDown).Perform ();
-            new Actions (Browser).SendKeys (OpenQA.Selenium.Keys.Return).Perform ();
+            IWebElement foundRecepient = wait.Until (b => b.FindElements (By.CssSelector ("#ui-id-1 > li"))[0]);
+            foundRecepient.Click ();
+            // new Actions (Browser).SendKeys (OpenQA.Selenium.Keys.ArrowDown).Perform ();
+            // new Actions (Browser).SendKeys (OpenQA.Selenium.Keys.Return).Perform ();
 
-            IWebElement topic = Browser.FindElement (By.Id("Theme"));
-            topic.SendKeys("testMyBUKEP");
-            IWebElement text = Browser.FindElement(By.Id("Text"));
-            text.SendKeys("hi!");
+            IWebElement topic = Browser.FindElement (By.Id ("Theme"));
+            topic.SendKeys ("testMyBUKEP");
+            IWebElement text = Browser.FindElement (By.Id ("Text"));
+            text.SendKeys ("hi!");
             IWebElement send = Browser.FindElement (By.Id ("sent"));
             send.Click ();
         }

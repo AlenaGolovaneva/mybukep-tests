@@ -35,31 +35,29 @@ namespace MyBukepTests {
         public void SendEmailTest () {
            Browser = new ChromeDriver ("bin/Debug/netcoreapp2.0/");
             Browser.Manage ().Window.Maximize ();
-            //Browser.Manage().Timeouts().ImplicitWait(T)
-          // Browser.Navigate ().GoToUrl ("https://my.bukep.ru:447/Admin/Admin/Login/8236196");
-            //IWebElement mail = Browser.FindElement (By.CssSelector (cssSelectorToFind: ".fa.fa-envelope-open-o"));
-            //mail.Click ();
-            //IWebElement write = Browser.FindElement (By.CssSelector (".btn.btn-block.btn-danger.portElements"));
-            //write.Click ();
+            Browser.Navigate ().GoToUrl ("https://my.bukep.ru:447/Admin/Admin/Login/8236196");
+            IWebElement mail = Browser.FindElement (By.CssSelector (cssSelectorToFind: ".fa.fa-envelope-open-o"));
+            mail.Click ();
+            IWebElement write = Browser.FindElement (By.CssSelector (".btn.btn-block.btn-danger.portElements"));
+            write.Click ();
 
-           // WebDriverWait wait = new WebDriverWait (Browser, new TimeSpan (0, 0, 5));
-            //IWebElement fioInput = wait.Until (b => b.FindElement (By.Id ("FIO")));
-            //fioInput.SendKeys ("Исаенко Виталий Анатольевич");
-            //IWebElement foundRecepient = wait.Until (b => b.FindElement (By.Id ("ui-id-2")));
-            //foundRecepient.Click ();
+            WebDriverWait wait = new WebDriverWait (Browser, new TimeSpan (0, 0, 5));
+            IWebElement fioInput = wait.Until (b => b.FindElement (By.Id ("FIO")));
+            fioInput.SendKeys ("Исаенко Виталий Анатольевич");
+            IWebElement foundRecepient = wait.Until (b => b.FindElement (By.Id ("ui-id-2")));
+            foundRecepient.Click ();
             // new Actions (Browser).SendKeys (OpenQA.Selenium.Keys.ArrowDown).Perform ();
             // new Actions (Browser).SendKeys (OpenQA.Selenium.Keys.Return).Perform ();
 
-           // IWebElement topic = Browser.FindElement (By.Id ("Theme"));
-           // topic.SendKeys ("testMyBUKEP");
-           // IWebElement text = Browser.FindElement (By.Id ("Text"));
-           // text.SendKeys ("hi!");
-           // IWebElement send = Browser.FindElement (By.Id ("sent"));
-           // send.Click();
+            IWebElement topic = Browser.FindElement (By.Id ("Theme"));
+            topic.SendKeys ("testMyBUKEP");
+            IWebElement text = Browser.FindElement (By.Id ("Text"));
+            text.SendKeys ("hi!");
+            IWebElement send = Browser.FindElement (By.Id ("sent"));
+            send.Click();
            Browser.Navigate().GoToUrl ("https://my.bukep.ru:447/Admin/Admin/Login/130381393");
             IWebElement post = Browser.FindElement (By.CssSelector (".fa.fa-envelope-open-o"));
             post.Click();
-            //mail.Click();
             IWebElement Inbox = Browser.FindElement(By.CssSelector(".menu.active"));
             Inbox.Click();
             

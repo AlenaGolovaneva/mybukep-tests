@@ -33,7 +33,7 @@ namespace MyBukepTests {
         }
 
         public void SendEmailTest () {
-           Browser = new ChromeDriver ("bin/Debug/netcoreapp2.0/");
+            Browser = new ChromeDriver ("bin/Debug/netcoreapp2.0/");
             Browser.Manage ().Window.Maximize ();
             Browser.Navigate ().GoToUrl ("https://my.bukep.ru:447/Admin/Admin/Login/8236196");
             IWebElement mail = Browser.FindElement (By.CssSelector (cssSelectorToFind: ".fa.fa-envelope-open-o"));
@@ -54,20 +54,29 @@ namespace MyBukepTests {
             IWebElement text = Browser.FindElement (By.Id ("Text"));
             text.SendKeys ("hi!");
             IWebElement send = Browser.FindElement (By.Id ("sent"));
-            send.Click();
-           Browser.Navigate().GoToUrl ("https://my.bukep.ru:447/Admin/Admin/Login/130381393");
+            send.Click ();
+            Browser.Navigate ().GoToUrl ("https://my.bukep.ru:447/Admin/Admin/Login/130381393");
             IWebElement post = Browser.FindElement (By.CssSelector (".fa.fa-envelope-open-o"));
-            post.Click();
-            IWebElement Inbox = Browser.FindElement(By.CssSelector(".menu.active"));
-            Inbox.Click();
-            
-            
-            IList<IWebElement> chuse = Browser.FindElements(By.CssSelector("div.col-lg-11.col-xs-10.col-sm-10"));
-            foreach (IWebElement mails in chuse)
-            {
-                Console.WriteLine(mails);
+            post.Click ();
+            IWebElement Inbox = Browser.FindElement (By.CssSelector (".menu.active"));
+            Inbox.Click ();
 
-            } 
+            IList<IWebElement> fullMessage = Browser.FindElements (By.CssSelector ("#fullMessage > div > div > div"));
+            IWebElement messageSender = fullMessage[0].FindElement (By.CssSelector ("div > span"));
+            IWebElement messageTopic = fullMessage[1].FindElement (By.CssSelector ("div > span"));
+            IWebElement messageText = fullMessage[2].FindElement (By.CssSelector ("div > span"));
+            Console.WriteLine (messageSender.Text);
+            Console.WriteLine (
+                messageSender.Text == "Голованева Алёна Викторовна" &&
+                messageTopic.Text == "testMyBUKEP" &&
+                messageText.Text == "hi!");
+
+            // IList<IWebElement> chuse = Browser.FindElements(By.CssSelector("div.col-lg-11.col-xs-10.col-sm-10"));
+            // foreach (IWebElement mails in chuse)
+            // {
+            // Console.WriteLine(mails);
+            // }
+
             //List<IWebElement> chuse = Browser.FindElements(By.CssSelector(".col-lg-8.col-xs-8.col-sm-8.shortMessage")).ToList();
             //IWebElement Inbox = Browser.FindElement(By.CssSelector("Голованева"));
             //for ( int i = 0; i < chuse.Count; i++ )
